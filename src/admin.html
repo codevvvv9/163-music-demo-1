@@ -7,10 +7,25 @@
     <title>管理页面</title>
 </head>
 <body>
+    <style>
+      p{margin: 5px; padding: 0;}
+      #container{
+        padding: 50px 80px;
+        border: 2px dashed #ddd;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        flex-direction: column;
+      }
+    </style>
     <audio controls src="http://p4fjvudg7.bkt.clouddn.com/%E5%B2%91%E5%AE%81%E5%84%BF%20-%20%E8%BF%BD%E5%85%89%E8%80%85.mp3"></audio>
     <div id="container">
-      <button id="pickfiles">upload</button>
+      <span id="pickfiles">点击或者拖曳文件</span>
+      <p>文件大小不能超过 40MB</p>
     </div>
+    <div id="uploadStatus"></div>
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
     <script src="../vendors/moxie.js"></script>
@@ -44,7 +59,6 @@
             max_retries: 3,                   //上传失败最大重试次数
             dragdrop: true,                   //开启可拖曳上传
             drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-            chunk_size: '4mb',                //分块上传时，每片的体积
             auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
             init: {
               'FilesAdded': function (up, files) {
@@ -57,8 +71,10 @@
               },
               'UploadProgress': function (up, file) {
                 // 每个文件上传时,处理相关的事情
+                uploadStatus.textContent = '上传中'
               },
               'FileUploaded': function (up, file, info) {
+                uploadStatus.textContent = '上传完毕'
                 // 每个文件上传成功后,处理相关的事情
                 // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
                 // {
@@ -76,14 +92,6 @@
               },
               'UploadComplete': function () {
                 //队列文件处理完毕后,处理相关的事情
-              },
-              'Key': function (up, file) {
-                // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-                // 该配置必须要在 unique_names: false , save_key: false 时才生效
-
-                var key = "";
-                // do something with key here
-                return key
               }
             }
           });
