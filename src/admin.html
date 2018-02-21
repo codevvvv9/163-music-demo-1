@@ -4,28 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/default.css">
     <title>管理页面</title>
 </head>
 <body>
-    <style>
-      p{margin: 5px; padding: 0;}
-      #container{
-        padding: 50px 80px;
-        border: 2px dashed #ddd;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        flex-direction: column;
-      }
-    </style>
-    <audio controls src="http://p4fjvudg7.bkt.clouddn.com/%E5%B2%91%E5%AE%81%E5%84%BF%20-%20%E8%BF%BD%E5%85%89%E8%80%85.mp3"></audio>
-    <div id="container">
-      <span id="pickfiles">点击或者拖曳文件</span>
-      <p>文件大小不能超过 40MB</p>
-    </div>
-    <div id="uploadStatus"></div>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="newSong">
+        新建歌曲
+      </div>
+      <ul class="songList">
+        <li></li>
+      </ul>
+      <div class="uploadArea">
+        <div id="container">
+          <span id="pickfiles">点击或者拖曳文件</span>
+          <p>文件大小不能超过 40MB</p>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <form action="" class="form">
+        <div class="row">
+          <label for="">
+            歌名
+            <input type="text" name="" id="">
+          </label>
+        </div>
+        <div class="row">
+          <label for="">
+            歌手
+            <input type="text" name="" id="">
+          </label>
+        </div>
+        <div class="row">
+          <label for="">
+            外链
+            <input type="text" name="" id="">
+          </label>
+        </div>
+        <div class="row">
+          <button type="submit">保存</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
     <script src="../vendors/moxie.js"></script>
