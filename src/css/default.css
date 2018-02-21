@@ -17,10 +17,39 @@ body{
 }
 .page > aside{
   width: 200px;
-  border: 1px solid red;
 }
-.page > aside #container{
-  padding: 50px 80px;
+.page > main{
+  flex-grow: 1;
+}
+
+/* aside */
+.page > aside{
+  display: flex;
+  flex-direction: column;
+}
+.newSong{
+  text-align: center;
+  padding: 10px;
+}
+.newSong.active{
+  background: #d4d4d4;
+}
+.songList{
+  flex-grow: 1;
+  text-align: left;
+  border-top: 1px solid #999;
+}
+.songList > li{
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+.songList > li.active{
+  background: #d4d4d4;
+}
+.uploadArea{}
+.draggable{
+  text-align: center;
+  padding: 20px;
   border: 2px dashed #ddd;
   border-radius: 20px;
   display: flex;
@@ -29,7 +58,6 @@ body{
   width: 200px;
   flex-direction: column;
 }
-.page > main{
-  flex-grow: 1;
-  border: 1px solid green;
+.clickable{
+  cursor: pointer;
 }
