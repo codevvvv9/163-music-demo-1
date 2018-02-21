@@ -18,7 +18,6 @@ body{
 }
 .page > aside{
   width: 200px;
-  margin-right: 20px;
 }
 .page > main{
   flex-grow: 1;
@@ -65,16 +64,22 @@ body{
 }
 
 /* main */
+.page > main{
+  background: #d4d4d4;
+  padding-left: 20px;
+}
 .form{
   font-size: 14px;
 }
 .form > .row{
-  margin: 10px 0;
+  margin: 20px 0;
+  display: flex;
 }
 .form > .row > label{
-  display: inline-block;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 4em;
-  text-align: right;
   margin-right: 5px;
 }
 .form > .row.actions{
