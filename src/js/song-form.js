@@ -38,7 +38,11 @@
       this.view = view
       this.model = model
       this.view.render(this.model.data)
+    },
+    reset() {
+      alert('我被上传模块调用了')
     }
   }
   controller.init(view, model)
+  window.app.songForm = controller
 }
