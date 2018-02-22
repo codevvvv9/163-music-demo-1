@@ -49,12 +49,10 @@
               var domain = up.getOption('domain');
               var response = JSON.parse(info.response);
               var sourceLink = 'http://' + domain + '/' + encodeURIComponent(response.key); 
-              console.log({
+              window.eventHub.emit('upload', {
                 'link': sourceLink,
                 'key': response.key
               })
-              window.app.newSong.active()
-              window.app.songForm.reset()
             },
           'Error': function (up, err, errTip) {
             //上传出错时,处理相关的事情
@@ -67,5 +65,4 @@
     }
   }
   controller.init(view, model)
-  window.app.uploadSong = controller
 }
