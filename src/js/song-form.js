@@ -8,27 +8,34 @@
         <label for="">
           歌名
         </label>
-        <input type="text" name="" id="">
+        <input type="text" value="__key__" id="">
       </div>
       <div class="row">
         <label for="">
           歌手
         </label>
-        <input type="text" name="" id="">
+        <input type="text"  id="">
       </div>
       <div class="row">
         <label for="">
           外链
         </label>
-        <input type="text" name="" id="">
+        <input type="text" value="__link__" id="">
       </div>
       <div class="row actions">
         <button type="submit">保存</button>
       </div>
     </form>
     `,
-    render(data) {
-      $(this.el).html(this.template)
+    render(data = {}) {
+      let placeholders = ['key', 'link']
+      let html = this.template
+      placeholders.map((string) => {
+        html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
+        console.log(2)
+
+      })
+      $(this.el).html(html)
     }
   }
 
@@ -39,13 +46,10 @@
       this.model = model
       this.view.render(this.model.data)
       window.eventHub.on('upload', (data) => {
-        console.log('song form 模块得到了 data')
-        console.log(data)
+        this.view.render(data)
       })
     },
-    reset(data) {
-      alert('我被上传模块调用了')
-    }
+    
   }
   controller.init(view, model)
 }
