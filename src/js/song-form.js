@@ -32,8 +32,6 @@
       let html = this.template
       placeholders.map((string) => {
         html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
-        console.log(2)
-
       })
       $(this.el).html(html)
     }
