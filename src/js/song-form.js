@@ -1,6 +1,9 @@
 {
   let view = {
     el: '.page > main',
+    init(){
+      this.$el = $(this.el)
+    },
     template: `
     <h1>新建歌曲</h1>
     <form action="" class="form">
@@ -8,19 +11,19 @@
         <label for="">
           歌名
         </label>
-        <input type="text" value="__key__" id="">
+        <input type="text" name="name" value="__name__" id="">
       </div>
       <div class="row">
         <label for="">
           歌手
         </label>
-        <input type="text"  id="">
+        <input type="text" name="singer" value="__singer__"id="">
       </div>
       <div class="row">
         <label for="">
           外链
         </label>
-        <input type="text" value="__link__" id="">
+        <input type="text" name="url" value="__url__" id="">
       </div>
       <div class="row actions">
         <button type="submit">保存</button>
@@ -28,7 +31,7 @@
     </form>
     `,
     render(data = {}) {
-      let placeholders = ['key', 'link']
+      let placeholders = ['name', 'url', 'singer', 'id']
       let html = this.template
       placeholders.map((string) => {
         html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
@@ -37,16 +40,65 @@
     }
   }
 
-  let model = {}
+  let model = {
+    data: {
+      name: '', singer: '', url: '', id: ''
+    },
+    create(data) {
+      // 声明类型
+      var Song = AV.Object.extend('Song');
+      // 新建对象
+      var song = new Song();
+      // 设置名称
+      song.set('name', data.name);
+      song.set('singer', data.singer);
+      song.set('url', data.url);
+      //返回的就是一个promise
+      return song.save().then( (newSong)=> {
+        console.log(newSong);
+        let {id, attributes} = newSong
+        // Object.assign(this.data, {
+        //   id: id,
+        //   name: attributes.name,
+        //   singer: attributes.singer,
+        //   url: attributes.url
+        // })
+        //和上面的写法一样
+        Object.assign(this.data, {
+          id,
+          ...attributes
+        })
+      }, (error) => {
+        console.error(error);
+      });
+    }
+  }
   let controller = {
     init(view, model) {
       this.view = view
+      this.view.init()
       this.model = model
       this.view.render(this.model.data)
+      this.bindEvents()
       window.eventHub.on('upload', (data) => {
         this.view.render(data)
       })
     },
+    bindEvents() {
+      this.view.$el.on('submit', 'form', (e) => {
+        e.preventDefault()
+        let needs = 'name singer url'.split(' ')
+        let data = {}
+        needs.map((string) => {
+          data[string] = this.view.$el.find(`[name="${string}"]`).val()
+        })
+        this.model.create(data)
+          .then(() => {
+            console.log(this.model.data)
+            this.view.render(this.model.data)
+        })
+      })
+    }
     
   }
   controller.init(view, model)
