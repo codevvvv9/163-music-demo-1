@@ -37,6 +37,9 @@
         html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
       })
       $(this.el).html(html)
+    },
+    reset() {
+      this.render({})
     }
   }
 
@@ -81,7 +84,8 @@
       this.view.render(this.model.data)
       this.bindEvents()
       window.eventHub.on('upload', (data) => {
-        this.view.render(data)
+        this.model.data = data
+        this.view.render(this.model.data)
       })
     },
     bindEvents() {
@@ -94,9 +98,13 @@
         })
         this.model.create(data)
           .then(() => {
-            console.log(this.model.data)
-            this.view.render(this.model.data)
-        })
+            this.view.reset()
+            //为了避免两次传的值一样，采用下面的代码
+            let string = JSON.stringify(this.model.data)
+            let object = JSON.parse(string)
+            // window.eventHub.emit('create', this.model.data)
+            window.eventHub.emit('create', object)
+          })
       })
     }
     
