@@ -15,20 +15,19 @@
       this.model = model
       this.active()
       this.view.render(this.model.data)
-      window.eventHub.on('upload', (data) => {
-        // console.log('new song模块得到了 data')
-        // console.log(data)
+      window.eventHub.on('new', (data) => {
         this.active()
       })
       
       window.eventHub.on('select', (data) => {
        this.deactive()
       })
-      $(this.view.el).on('click', this.active.bind(this))
+      $(this.view.el).on('click', () => {
+        window.eventHub.emit('new')
+      })
     },
     active() {
       $(this.view.el).addClass('active')
-      window.eventHub.emit('new')
     },
     deactive() {
       $(this.view.el).removeClass('active')
