@@ -5,7 +5,6 @@
       this.$el = $(this.el)
     },
     template: `
-    <h1>新建歌曲</h1>
     <form action="" class="form">
       <div class="row">
         <label for="">
@@ -37,9 +36,15 @@
         html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
       })
       $(this.el).html(html)
+      if (data.id) {
+        $(this.el).prepend('<h1>编辑歌曲</h1>')
+      } else {
+        $(this.el).prepend('<h1>新建歌曲</h1>')
+      }
     },
     reset() {
       this.render({})
+
     }
   }
 
@@ -90,6 +95,13 @@
       window.eventHub.on('select', (data) => {
         this.model.data = data
         this.view.render(this.model.data)
+      })
+      window.eventHub.on('new', () => {
+        this.model.data = {
+          name: '', url: '', id: '', singer: ''
+        }
+        this.view.render(this.model.data)
+
       })
     },
     bindEvents() {
