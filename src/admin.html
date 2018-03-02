@@ -25,8 +25,47 @@
       </div>
     </aside>
     <main>
-      
     </main>
+  </div>
+  <style>
+    @keyframes loading{
+      0%{
+        transform: scale(1.0);
+      }
+      100%{
+        transform: scale(0.1);
+      }
+    }
+    .site-loading{
+      visibility: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .site-loading.active{
+      visibility: visible;
+    }
+    /*做绝对居中*/
+    .site-loading::before{
+      content: '';
+      display: block;
+      background: green;
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 50%;
+      margin-left: -50px;
+      margin-top: -50px;
+      border-radius: 50%;
+      animation: loading 1s infinite alternate-reverse linear;
+    }
+  </style>
+  <div id="siteLoading" class="site-loading">
   </div>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
@@ -35,6 +74,7 @@
     <script src="../vendors/moxie.js"></script>
     <script src="../node_modules/plupload/js/plupload.min.js"></script>
     <script src="./js/event-hub.js"></script>
+    <script src="./js/loading.js"></script>
     <script src="./js/song-form.js"></script>
     <script src="./js/new-song.js"></script>
     <script src="./js/song-list.js"></script>
