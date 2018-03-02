@@ -11,7 +11,7 @@
           </svg>
           {{song.singer}}
         </p>
-        <a class="playButton" href="#">
+        <a class="playButton" href="./song.html?id={{song.id}}">
           <svg class="icon icon-play">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
           </svg>
@@ -24,7 +24,11 @@
     render(data) {
       let {songs} = data
       songs.map((song) => {
-          let $li = $(this.template.replace('{{song.name}}', song.name).replace('{{song.singer}}', song.singer))
+        let $li = $(this.template
+          .replace('{{song.name}}', song.name)
+          .replace('{{song.singer}}', song.singer)
+          .replace('{{song.id}}', song.id)
+        )
         this.$el.find('ol.list').append($li)
       })
     }
