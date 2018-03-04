@@ -24,13 +24,19 @@
         </label>
         <input type="text" name="url" value="__url__" id="">
       </div>
+      <div class="row">
+      <label for="">
+        封面
+      </label>
+      <input type="text" name="cover" value="__cover__" id="">
+    </div>
       <div class="row actions">
         <button type="submit">保存</button>
       </div>
     </form>
     `,
     render(data = {}) {
-      let placeholders = ['name', 'url', 'singer', 'id']
+      let placeholders = ['name', 'url', 'singer', 'id', 'cover']
       let html = this.template
       placeholders.map((string) => {
         html = html.replace(`__${string}__`, data[string] || '') //不写或就会是undefined
@@ -50,7 +56,7 @@
 
   let model = {
     data: {
-      name: '', singer: '', url: '', id: ''
+      name: '', singer: '', url: '', id: '', cover: ''
     },
     update(data) {
       // 第一个参数是 className，第二个参数是 objectId
@@ -59,6 +65,7 @@
       song.set('name', data.name);
       song.set('singer', data.singer);
       song.set('url', data.url);
+      song.set('cover', data.cover);
       // 保存到云端
       return song.save().then((response) => {
         Object.assign(this.data, data)
@@ -74,6 +81,7 @@
       song.set('name', data.name);
       song.set('singer', data.singer);
       song.set('url', data.url);
+      song.set('cover', data.cover);
       //返回的就是一个promise
       return song.save().then( (newSong)=> {
         console.log(newSong);
@@ -127,7 +135,7 @@
       })
     },
     create() {
-      let needs = 'name singer url'.split(' ')
+      let needs = 'name singer url cover'.split(' ')
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val()
@@ -143,7 +151,7 @@
         })
     },
     update() {
-      let needs = 'name singer url'.split(' ')
+      let needs = 'name singer url cover'.split(' ')
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val()
