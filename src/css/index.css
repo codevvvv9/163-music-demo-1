@@ -201,3 +201,14 @@ section.art .copyright{
   color: #888;
   transform: scale(.75);
 }
+/* page-3 搜索*/
+.page-3 > .search{
+  background: #EBECEC;
+  padding: 6px;
+  margin: 10px;
+  border-radius: 6px;
+}
+.page-3 .search-songs{
+  padding: 6px;
+  border-radius: 6px;
+}
